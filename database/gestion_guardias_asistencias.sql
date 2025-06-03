@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2025 a las 13:09:57
+-- Tiempo de generación: 22-05-2025 a las 09:48:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -91,18 +91,17 @@ INSERT INTO `aules` (`codi`, `aula`) VALUES
 --
 
 CREATE TABLE `ausencias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `documento` varchar(10) NOT NULL,
-  `fecha_inicio` date DEFAULT NULL,
+  `fecha_inicio` date NOT NULL,
   `fecha_fin` date DEFAULT NULL,
-  `hora_inicio` time DEFAULT NULL,
-  `hora_fin` time DEFAULT NULL,
-  `motivo` text DEFAULT NULL,
-  `jornada_completa` tinyint(1) DEFAULT 0,
-  `justificada` tinyint(1) DEFAULT 0,
-  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `registrado_por` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL,
+  `motivo` text NOT NULL,
+  `jornada_completa` tinyint(1) NOT NULL DEFAULT 0,
+  `justificada` tinyint(1) NOT NULL DEFAULT 0,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `registrado_por` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -2917,7 +2916,6 @@ CREATE TABLE `registro_guardias` (
   `aula` varchar(10) NOT NULL,
   `grupo` varchar(10) NOT NULL,
   `contenido` varchar(255) NOT NULL,
-  `sesion_orden` varchar(2) NOT NULL,
   `dia_semana` char(1) NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL
@@ -2936,16 +2934,6 @@ CREATE TABLE `registro_jornada` (
   `hora_entrada` time DEFAULT NULL,
   `hora_salida` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
-
---
--- Volcado de datos para la tabla `registro_jornada`
---
-
-INSERT INTO `registro_jornada` (`id`, `documento`, `fecha`, `hora_entrada`, `hora_salida`) VALUES
-(7, '11111111A', '2025-04-03', '12:27:34', '12:27:52'),
-(8, '11111111A', '2025-04-03', '12:48:48', '12:48:57'),
-(9, '010960328X', '2025-04-04', '10:48:01', '10:48:14'),
-(10, '047928150S', '2025-04-04', '12:43:56', '12:43:58');
 
 -- --------------------------------------------------------
 
@@ -3071,79 +3059,79 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `documento`, `password`, `rol`) VALUES
-(2, '11111111A', 'secret', 'admin'),
-(3, '22222222B', 'secret', 'profesor'),
-(4, '010960328X', 'secret', 'profesor'),
-(5, '010969028D', 'secret', 'profesor'),
-(6, '011078949R', 'secret', 'profesor'),
-(7, '011921608R', 'secret', 'profesor'),
-(8, '011939238D', 'secret', 'profesor'),
-(9, '011949328W', 'secret', 'profesor'),
-(10, '011973418Z', 'secret', 'profesor'),
-(11, '012855339X', 'secret', 'profesor'),
-(12, '012905318D', 'secret', 'profesor'),
-(13, '012950628N', 'secret', 'profesor'),
-(14, '012951758W', 'secret', 'profesor'),
-(15, '012986535F', 'secret', 'profesor'),
-(16, '013906018J', 'secret', 'profesor'),
-(17, '013928518A', 'secret', 'profesor'),
-(18, '013931868S', 'secret', 'profesor'),
-(19, '013962048R', 'secret', 'profesor'),
-(20, '014919208N', 'secret', 'profesor'),
-(21, '014985308L', 'secret', 'profesor'),
-(22, '015965468J', 'secret', 'profesor'),
-(23, '016910908H', 'secret', 'profesor'),
-(24, '016946918A', 'secret', 'profesor'),
-(25, '016976848Q', 'secret', 'profesor'),
-(26, '017050149N', 'secret', 'profesor'),
-(27, '017911348P', 'secret', 'profesor'),
-(28, '017959408Z', 'secret', 'profesor'),
-(29, '019080189D', 'secret', 'profesor'),
-(30, '019825419Z', 'secret', 'profesor'),
-(31, '019900748V', 'secret', 'profesor'),
-(32, '020446640M', 'secret', 'profesor'),
-(33, '022615771H', 'secret', 'profesor'),
-(34, '023440660P', 'secret', 'profesor'),
-(35, '024163252T', 'secret', 'profesor'),
-(36, '024389784E', 'secret', 'profesor'),
-(37, '024453065H', 'secret', 'profesor'),
-(38, '025347434A', 'secret', 'profesor'),
-(39, '025470191A', 'secret', 'profesor'),
-(40, '026577702D', 'secret', 'profesor'),
-(41, '026715900R', 'secret', 'profesor'),
-(42, '027246470Z', 'secret', 'profesor'),
-(43, '028203430W', 'secret', 'profesor'),
-(44, '028301344S', 'secret', 'profesor'),
-(45, '028376971Q', 'secret', 'profesor'),
-(46, '029218450V', 'secret', 'profesor'),
-(47, '031478003M', 'secret', 'profesor'),
-(48, '033580118G', 'secret', 'profesor'),
-(49, '039660939E', 'secret', 'profesor'),
-(50, '041346258R', 'secret', 'profesor'),
-(51, '045760203C', 'secret', 'profesor'),
-(52, '045989240B', 'secret', 'profesor'),
-(53, '046417441L', 'secret', 'profesor'),
-(54, '046730283P', 'secret', 'profesor'),
-(55, '047397438M', 'secret', 'profesor'),
-(56, '047928150S', 'secret', 'profesor'),
-(57, '054309783V', 'secret', 'profesor'),
-(58, '055742962J', 'secret', 'profesor'),
-(59, '059603111F', 'secret', 'profesor'),
-(60, '070094824B', 'secret', 'profesor'),
-(61, '070374673Z', 'secret', 'profesor'),
-(62, '070391913Z', 'secret', 'profesor'),
-(63, '072516423B', 'secret', 'profesor'),
-(64, '075035864L', 'secret', 'profesor'),
-(65, '075345863D', 'secret', 'profesor'),
-(66, '076304893C', 'secret', 'profesor'),
-(67, '076335803B', 'secret', 'profesor'),
-(68, '078229283W', 'secret', 'profesor'),
-(69, '078308873T', 'secret', 'profesor'),
-(70, '078395783P', 'secret', 'profesor'),
-(71, '078399623C', 'secret', 'profesor'),
-(72, '079320803C', 'secret', 'profesor'),
-(73, '079351863T', 'secret', 'profesor'),
-(74, 'X09610120P', 'secret', 'profesor');
+(2, '11111111A', '$2b$12$wxgWncOBlCr67FRj8iHAMO102BCNbDcLxFAgAOPpZjDctGht9B1J2', 'admin'),
+(3, '22222222B', '$2b$12$d8CW3WNmE2uiEUUMmj2w4e65M8WEeIqAiSWQu/L.9UDSGIZ.1oGem', 'profesor'),
+(4, '010960328X', '$2b$12$ca3iaKxOYB8zupb9B9i8zuFL/sh93udJnDjho4akNF.ern90mrwbq', 'admin'),
+(5, '010969028D', '$2b$12$OyPhMsK7s7GjfV9hD.sQR.ePTDdJFholCsWU5IPLptw8Bei2FWHQq', 'profesor'),
+(6, '011078949R', '$2b$12$jB9ON4g8L16buP/.HseLDuRFxl4itXPlGivC8U5xSRAhNuQEdsHYS', 'profesor'),
+(7, '011921608R', '$2b$12$rbYSCK16XT1A8mk4q1to8eAcFVOpb2OCZJ/auhVbq3CbaBW31T0P6', 'profesor'),
+(8, '011939238D', '$2b$12$QLRS/ZYNo4DFxuylytlGiOTq9ch5NFWNDkCyIcJwsmA5JqhLGelj2', 'profesor'),
+(9, '011949328W', '$2b$12$/aFjT/qhLpxowvvzgPq5OubEajGQnAUuSIlxdELrskY8B/VWbZ56i', 'profesor'),
+(10, '011973418Z', '$2b$12$0ena7qEpsKwhoy0z7udfe.x9fLYEnoxDmjPnfbwUTVBdrDR8P3Vgq', 'profesor'),
+(11, '012855339X', '$2b$12$ChRR8ITarxi/gpN8JhlY3e8S8RJ3/dcnjTwffo2d2PA0rXS6HFUCy', 'profesor'),
+(12, '012905318D', '$2b$12$9taSFQRIRfd/yyvuhszSLui0p3mfNClNG6eeZ0sU0wDbwAvt8P.SC', 'profesor'),
+(13, '012950628N', '$2b$12$u/N0PHD57.q.cX2HEkT8NO0VkB6bC1LI2WOesZAGjjaiX.WVSZqCW', 'profesor'),
+(14, '012951758W', '$2b$12$7NqZtgX4db3dgXt6HsuavuPg5RY97tpeaegWG3tm3sH4.IqICjtom', 'profesor'),
+(15, '012986535F', '$2b$12$U4jpEWulsz5PatYuxD/b2eESw7jtlFnrGwdbeaVK8gdbELvDQSlN.', 'profesor'),
+(16, '013906018J', '$2b$12$InSfFjyCP49R6Xi/lLKS0OzaNjCzZh8EjZEl4H7okfZkhNUbxjqqC', 'profesor'),
+(17, '013928518A', '$2b$12$8isI8x1tiUWeh3gd/W0yN.PxR50WeqlDaWBTm9YPnl8ob1uhSRvB.', 'profesor'),
+(18, '013931868S', '$2b$12$eJVDluBl2Tu0G/p9n6wUTeh.bnTXbv4vF406/l2MMZo.mGE2eiq8O', 'profesor'),
+(19, '013962048R', '$2b$12$0y1e.xC4Uoemgggvb24i..uhNFFzNlt3.QRAs2d9PhIF8QKtfPr8u', 'profesor'),
+(20, '014919208N', '$2b$12$YrG6ceWBe1r3VmtnsJ6lK.KjVkeKb3wRbC4Y7CqZAscb9jctGD3J.', 'profesor'),
+(21, '014985308L', '$2b$12$4Ge4OPQFapea79jfDDLl5.ns9oowAzB0n6GJTCjx4KZt5.rfXtutO', 'profesor'),
+(22, '015965468J', '$2b$12$mvpnwk.QSM4XyPM/.eWSQ.YaQ65esd8swWASqIygtgLg8uWq.y./e', 'profesor'),
+(23, '016910908H', '$2b$12$J2Vhx6/K/on9hrz./FsO9u7AUqVCKvwuOIkvzl6UNZ83Qvi.nX4lO', 'profesor'),
+(24, '016946918A', '$2b$12$6UFFE6Cr.LxbKVWP9a./r.J./XRgPyIyfdcgUW5qF4LxZaiw1yysO', 'profesor'),
+(25, '016976848Q', '$2b$12$p0QY8mmDCGuXf7boW1SqN.DgY9cyCk7jwBfIX5qR67HwiujeoOSZW', 'profesor'),
+(26, '017050149N', '$2b$12$dznOkoJwkMBeyf0BdAHOq.Qr7dC3Z3eHk4R75N6H7.bQFyGNOVJ6a', 'profesor'),
+(27, '017911348P', '$2b$12$mzcQ/89URjk/hPXIrF63gOe9zDXFJshiOkByCeZVJHTfY.5thGWMC', 'profesor'),
+(28, '017959408Z', '$2b$12$B72xokL3n0yKH2sU03FXZOnFFlmGZOoCvWHCwrXixrnlUh8zJTM6y', 'profesor'),
+(29, '019080189D', '$2b$12$GCR35IelE7K.KCo82Lsl4.JXA2b0iELBafGrCDFsysvl4b6k2q8cS', 'profesor'),
+(30, '019825419Z', '$2b$12$57vHn5bkEn9E2h86q2Xpfe8nJCQxptjvLlgYrxZ80xGQho4LuvLWe', 'profesor'),
+(31, '019900748V', '$2b$12$eLq.noZiZk.PIG8Qnka9auF02SkDtQh3.0bcCkA5m9LmOO5ZSFJHe', 'profesor'),
+(32, '020446640M', '$2b$12$7I6EEuDcbGBVARXwF3kPpeLVxLZaAVJLr498ofyLdIz1lXdkj8seK', 'profesor'),
+(33, '022615771H', '$2b$12$GXX2CS7ZgQ41uT1HkKjK0u5O/7CsDxBzSstRV8Qvi.noTaJpgFhja', 'profesor'),
+(34, '023440660P', '$2b$12$GT1.YazwHYF1g6HDBOwXwOpSqqSCrSob33hGPDTBtRj2zFP61Y6i2', 'profesor'),
+(35, '024163252T', '$2b$12$TS4NRat4JerCFFpAxfpHuO9LDdYt08xzP1583nS5HkPnYWef8heuu', 'profesor'),
+(36, '024389784E', '$2b$12$gSf.REoOvZTuIkvY.tqaWe9kcZHBmZwbj.eQe3j4Jyg/YqGxagrae', 'profesor'),
+(37, '024453065H', '$2b$12$fUjVtO2Tv5WTJB5ibK4pvOOAbFmXRH9KSh3RWUIPg4G5R/g65a1ay', 'profesor'),
+(38, '025347434A', '$2b$12$uOkN1Z8Tz2WNjDVV1q3HR..Ax5lw6cLURFqhFSmsPgtNJtLhXBnsW', 'profesor'),
+(39, '025470191A', '$2b$12$iNgLCmFgT59kVVXpruEoPe2.Ld/LDg7L6B/Db6xC6oA2yDjnHg2c6', 'profesor'),
+(40, '026577702D', '$2b$12$djvG9.8Ii1S7yze.tGLqeu3nqng8OcPVJTrjdgNrgkHjCbMHrX3hq', 'profesor'),
+(41, '026715900R', '$2b$12$9g.bnVMXdmf4DIm4X62prO4TZaYhVikcNNijhDyFdKEsWOAunO8AS', 'profesor'),
+(42, '027246470Z', '$2b$12$dhlR.A5/6aPwJ7eGwEUHiefQolANE7I.czkD3MvprZrqti0vLYPN2', 'profesor'),
+(43, '028203430W', '$2b$12$7JK9a2qhDXoiTRSWd5S6x.Dfyhnd6jTNr7GZJWG8eBE618R184C3a', 'profesor'),
+(44, '028301344S', '$2b$12$6IUAmyKQygtti2yfNTx7Ye5E4QtmQP2nZZzr5eO9GquTl8MQJ63Du', 'profesor'),
+(45, '028376971Q', '$2b$12$00ijVTxsmd8Fcxq5XHzDcOrxBIbLMFvykqq8caaat2iD4iZ/9rsrq', 'profesor'),
+(46, '029218450V', '$2b$12$pcEc95rolcaLZErNFPfgnuWu/CQab0aQcnXJHHkIz736qEFgsD78C', 'profesor'),
+(47, '031478003M', '$2b$12$Q.ZWqxSpo.ZWc14L9Pz8hOpUqqVp4m/Wj53HO0zUp6ZQCWginB18.', 'profesor'),
+(48, '033580118G', '$2b$12$voWbnhsT.P3kroJA5dZyT.v6p81G71e/3ArvMt1eCwg28jvNF73vK', 'profesor'),
+(49, '039660939E', '$2b$12$yVLTXHJV.JxOAmKS1rHoCO6Untxui2Hi9z1IbZvsotRK2JfYWxY6u', 'profesor'),
+(50, '041346258R', '$2b$12$pPlzDdGm94LaIUOpFLEy.eLbgMr.7j3P4waTWqxKGAkJhR4Nu.u.C', 'profesor'),
+(51, '045760203C', '$2b$12$K6ElpA9UnXOeeobghjleR.p7NDtr9N8rSzti5M4vtBDofTI6JYEvm', 'profesor'),
+(52, '045989240B', '$2b$12$g64pN4HiF2.aElw/XlU40eHh4xn9aJq410jaWIxfZdjfR2K2C/p4S', 'profesor'),
+(53, '046417441L', '$2b$12$s36gfayo4TWW/.k6ZYFpbOlH06j9asfLIny7jRTh/qD35/uGPrYvO', 'profesor'),
+(54, '046730283P', '$2b$12$fQgegPTpp.pk8o05AvjDNuLhR7VbxBUUyGH/QIE4.ov0VjsbKpK/e', 'profesor'),
+(55, '047397438M', '$2b$12$590qMWfyKe5kQL.fd1xOc..31bd9LE9bbCnDPqWwu5AzEuXqVA98G', 'profesor'),
+(56, '047928150S', '$2b$12$MicmkZd2qks9dkdId0d.MecvOpSJTCdZzfAXVZO8gRJvdiWopLyuG', 'profesor'),
+(57, '054309783V', '$2b$12$3A.TUHUpp.cmqIgaDNnUMOq/oxWGoS0iIJ9p.UngPi4v2Ya0oOPwK', 'profesor'),
+(58, '055742962J', '$2b$12$yfj2qcP.uhHKa9HWtNdHU.Ztl0u.NOnV4bcI7C5Ybygy.VVUea5Y.', 'profesor'),
+(59, '059603111F', '$2b$12$S6kvuHdDtW1pGh9qhf4BxuHTOIwUAX/JoaAWOPMEL5AYjotvMqCEi', 'profesor'),
+(60, '070094824B', '$2b$12$u.a80H74Fm..QB5E6361VeOIuHbKyFnfg.JzGv8yjvd6uvNVPLaUu', 'profesor'),
+(61, '070374673Z', '$2b$12$jqjr59aboayt4b/ZvP3BP.aadrhMFEqTMRSKOVzPKpvNi9VFkWJPq', 'profesor'),
+(62, '070391913Z', '$2b$12$hfIfZp169FfNXcCvGvxubuyJAg7GzIhbzr79SsXKzapvfVpdOJJ.6', 'profesor'),
+(63, '072516423B', '$2b$12$cnUrxCfz4ovMbCT/SsUateJKt9U6lCXQF/bWwbloFR4Smu9q3MhsK', 'profesor'),
+(64, '075035864L', '$2b$12$kW8wufXg3.LA6LfBgMVBi.jx8c11XCYmQG/1M/WpNvinSpWqtz2ki', 'profesor'),
+(65, '075345863D', '$2b$12$5PeABo50jXXHzvJbH0u2JevPcz9/fu1GhR9uowcamuK/hjb0C0ni.', 'profesor'),
+(66, '076304893C', '$2b$12$VEcfF4yvPqf9AEw5GBwmZubfgdUA2baUv8SaqFUD.t9YaUOlOJtx6', 'profesor'),
+(67, '076335803B', '$2b$12$y3NUKUpYLC/B.goXQ3ZxOeseMbW7jYTV6p0Qmi2kJlByO0S1ISEK2', 'profesor'),
+(68, '078229283W', '$2b$12$97giamfDBYOQk.C7pef.euw9RfVfqSSCIUnQbOkO1w8HcMuxU9L.C', 'profesor'),
+(69, '078308873T', '$2b$12$srNdcb2Dqv2UZMi4zG.w9OKaLLVE329DA.LxTbf3nghJ3z4Qr3LAe', 'profesor'),
+(70, '078395783P', '$2b$12$JijkPUPLJCKQoZvEHefwHuTlYQpf.jHvNIR1Ff5EVBqtUKKY/EHa.', 'profesor'),
+(71, '078399623C', '$2b$12$gG9v5wIHZQn6zizGKhrgx.f6VntIDzytkB2QTGI6is6VxNq2/JSnG', 'profesor'),
+(72, '079320803C', '$2b$12$laQ7D6dU./CsUNBhczNKkux45vPyqZFUIUjHUdqOAC4NEmuzMZZ8u', 'profesor'),
+(73, '079351863T', '$2b$12$EtA7XN/ArmGNyQBgKk0xR.nuOs8uToxrH9xoOrFeye4kbUeMUgetC', 'profesor'),
+(74, 'X09610120P', '$2b$12$r/JV7wLQ3KqQN2B4S3Cn6uCaMApRJAL82ZWF1Nlc1eLhkEROOkX9a', 'profesor');
 
 --
 -- Índices para tablas volcadas
@@ -3235,13 +3223,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ausencias`
 --
 ALTER TABLE `ausencias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `horari_grup`
 --
 ALTER TABLE `horari_grup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1454;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1457;
 
 --
 -- AUTO_INCREMENT de la tabla `horari_ocupacions`
@@ -3253,13 +3241,13 @@ ALTER TABLE `horari_ocupacions`
 -- AUTO_INCREMENT de la tabla `registro_guardias`
 --
 ALTER TABLE `registro_guardias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_jornada`
 --
 ALTER TABLE `registro_jornada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `sessions_horari`

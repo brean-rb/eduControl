@@ -1,15 +1,39 @@
 <?php
-// Configuración de la conexión a la base de datos
-define('SERVER', 'localhost');
-define('USER', 'root');
-define('PASSWORD', '');
-define('DATABASE', 'gestion_guardias_asistencias');
+// Configuración de la base de datos
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'gestion_guardias_asistencias');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 
-$conexion = @mysqli_connect(SERVER, USER, PASSWORD, DATABASE);
+// Crear conexión mysqli
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS);
 
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-} else {
-    mysqli_set_charset($conexion, 'utf8');
+// Verificar conexión inicial
+if (!$conn) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error de conexión al servidor MySQL: ' . mysqli_connect_error()
+    ]);
+    exit;
+}
 
+// Seleccionar la base de datos
+if (!mysqli_select_db($conn, DB_NAME)) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error al seleccionar la base de datos: ' . mysqli_error($conn)
+    ]);
+    exit;
+}
+
+// Establecer charset
+if (!mysqli_set_charset($conn, "utf8")) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error al establecer el charset: ' . mysqli_error($conn)
+    ]);
+    exit;
 }
