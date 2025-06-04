@@ -1,7 +1,7 @@
 <?php
-// Desactivar la salida de errores de PHP
-error_reporting(0);
-ini_set('display_errors', 0);
+// Habilitar errores para depuración
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Cargar configuración
 require_once __DIR__ . '/config/config.php';
@@ -70,6 +70,7 @@ try {
             throw new Exception('Ruta no encontrada');
     }
 } catch (Exception $e) {
+    error_log("Error en index.php: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()

@@ -1,4 +1,5 @@
-import { STORAGE_KEYS } from './config.js';
+import { API_CONFIG, STORAGE_KEYS } from './config.js';
+import { mostrarMensajeModal } from './utils.js';
 
 // Renderizar el navbar dinámicamente según el rol
 function renderNavbar() {
@@ -54,7 +55,7 @@ function renderNavbar() {
                 <div class="collapse navbar-collapse" id="navbarMain">
                     ${navLinks}
                     <div class="ms-auto">
-                        <button id="logout-btn" class="btn btn-danger">
+                        <button type="button" id="logout-btn" class="btn btn-danger">
                             log out <i class="fas fa-sign-out-alt ms-2"></i>
                         </button>
                     </div>
@@ -62,14 +63,6 @@ function renderNavbar() {
             </div>
         </nav>
     `;
-
-    // Configurar botón de logout
-    document.getElementById('logout-btn')?.addEventListener('click', function() {
-        localStorage.removeItem(STORAGE_KEYS.TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.ROL);
-        localStorage.removeItem(STORAGE_KEYS.NOMBRE);
-        window.location.href = 'login.php';
-    });
 }
 
 // Configurar mensaje de bienvenida si existe el elemento

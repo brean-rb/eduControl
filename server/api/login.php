@@ -52,7 +52,13 @@ try {
 
             // Registrar el inicio de sesión
             $log = date('Y-m-d H:i:s') . " - " . $row['documento'] . " inició sesión\n";
-            file_put_contents(__DIR__ . '/../registro_sesion.txt', $log, FILE_APPEND);
+            $file_path = __DIR__ . '/../registro_sesion.txt';
+            
+            // Log para depuración
+            error_log("Ruta del archivo en login: " . $file_path);
+            error_log("__DIR__ en login: " . __DIR__);
+            
+            file_put_contents($file_path, $log, FILE_APPEND);
 
             echo json_encode([
                 'success' => true,

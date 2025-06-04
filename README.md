@@ -22,10 +22,10 @@ Sistema integral desarrollado para la gestión eficiente de la asistencia del pe
 ### 1. Preparación del Entorno
 ```bash
 # Clonar el repositorio
-git clone https://github.com/brean-rb/proyecto_control_asistencia.git
+git clone https://github.com/brean-rb/eduControl.git
 
 # Mover al directorio de XAMPP
-mv proyecto_control_asistencia/ C:/xampp/htdocs/
+mv eduControl/ C:/xampp/htdocs/
 ```
 
 ### 2. Configuración de la Base de Datos
@@ -43,7 +43,7 @@ define('DATABASE', 'gestion_guardias_asistencias');
 ```
 
 ## Acceso al Sistema
-URL: `http://localhost/proyecto_control_asistencia/client/src/login.php`
+URL: `http://localhost/eduControl/client/src/login.php`
 
 ### Credenciales de Prueba
 | Rol | Documento | Contraseña |
@@ -53,7 +53,7 @@ URL: `http://localhost/proyecto_control_asistencia/client/src/login.php`
 
 ## Estructura del Proyecto
 ```
-proyecto_control_asistencia/
+eduControl/
 ├── client/                 # Frontend de la aplicación
 │   ├── css/               # Estilos
 │   ├── js/                # Scripts del cliente
@@ -77,7 +77,7 @@ proyecto_control_asistencia/
 - Validación de datos en cliente y servidor
 
 ## Soporte
-Para reportar problemas o solicitar nuevas características, por favor crear un issue en el repositorio del proyecto.
+Para reportar problemas o solicitar nuevas características, por favor crear un issue en el repositorio del proyecto: [https://github.com/brean-rb/eduControl](https://github.com/brean-rb/eduControl)
 
 ## Licencia
 Este proyecto está desarrollado con fines educativos como parte del módulo de Proyecto del Ciclo Superior de Desarrollo de Aplicaciones Web (DAW).
