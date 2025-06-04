@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  informe_ausencias.php (Informes de Ausencias)
+ * =========================
+ * 
+ * Endpoint de generación de informes.
+ * Gestiona:
+ * - Generación de informes
+ * - Filtrado de datos
+ * - Exportación de informes
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  docentes.php (Gestión de Docentes)
+ * =========================
+ * 
+ * Endpoint de gestión de docentes.
+ * Gestiona:
+ * - Listado de docentes
+ * - Información de docentes
+ * - Roles de docentes
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

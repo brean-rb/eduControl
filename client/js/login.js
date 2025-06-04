@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  login.js (Autenticación)
+ * =========================
+ * 
+ * Módulo de autenticación del sistema.
+ * Gestiona el proceso de inicio de sesión:
+ * - Validación del formulario
+ * - Envío de credenciales
+ * - Almacenamiento del token JWT
+ * - Redirección post-login
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { API_CONFIG, STORAGE_KEYS } from './config.js';
 
 document.getElementById('login-form').addEventListener('submit', function(e) {

@@ -6,6 +6,23 @@ use Config\Authentication;
 
 header('Content-Type: application/json');
 
+/**
+ * =========================
+ *  obtener_guardias_realizadas.php (Historial de Guardias)
+ * =========================
+ * 
+ * Endpoint de historial de guardias realizadas.
+ * Gestiona:
+ * - Consulta de historial
+ * - Filtrado por fecha/hora
+ * - Estadísticas de guardias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Validar token JWT
 $auth = new Authentication();
 $error = $auth->validaToken();

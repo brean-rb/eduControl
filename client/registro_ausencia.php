@@ -1,3 +1,25 @@
+<?php
+/**
+ * =========================
+ *  registro_ausencia.php (Registro de Ausencias)
+ * =========================
+ * 
+ * Vista de registro de ausencias.
+ * Permite a los usuarios:
+ * - Registrar ausencias por día/período
+ * - Seleccionar horarios afectados
+ * - Justificar ausencias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   registro_ausencia.js     Lógica de registro
+ * @requires   navbar.js                Componente de navegación
+ * @requires   styles.css               Estilos de la aplicación
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

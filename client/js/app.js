@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  app.js (Aplicación Principal)
+ * =========================
+ * 
+ * Módulo principal de la aplicación.
+ * Gestiona la funcionalidad del panel de control:
+ * - Inicio/fin de jornada
+ * - Carga de horarios
+ * - Control de asistencia
+ * - Interacción con la API
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, fetchAutenticado, verificarAutenticacion } from './utils.js';
 import { API_CONFIG } from './config.js';
 

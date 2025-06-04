@@ -1,3 +1,25 @@
+<?php
+/**
+ * =========================
+ *  informe_ausencias.php (Informes de Ausencias)
+ * =========================
+ * 
+ * Vista de generación de informes de ausencias.
+ * Permite a los usuarios:
+ * - Generar informes por docente/fecha
+ * - Ver estadísticas
+ * - Exportar datos
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   informe_ausencias.js     Lógica de informes
+ * @requires   navbar.js                Componente de navegación
+ * @requires   styles.css               Estilos de la aplicación
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

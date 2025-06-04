@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  asistencia.php (Control de Asistencia)
+ * =========================
+ * 
+ * Endpoint de control de asistencia.
+ * Gestiona:
+ * - Registro de asistencia
+ * - Consulta de asistencia
+ * - Estadísticas de asistencia
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

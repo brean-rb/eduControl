@@ -2,6 +2,23 @@
 
 namespace Config;
 
+/**
+ * =========================
+ *  Authentication.php (Autenticación)
+ * =========================
+ * 
+ * Clase de autenticación del sistema.
+ * Gestiona:
+ * - Validación de tokens JWT
+ * - Generación de tokens
+ * - Control de sesiones
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Incluir el autoload de Composer para cargar las dependencias
 require_once __DIR__ . '/../../vendor/autoload.php';
 

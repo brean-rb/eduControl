@@ -1,4 +1,20 @@
 <?php
+/**
+ * =========================
+ *  config.php (Configuración)
+ * =========================
+ * 
+ * Archivo de configuración del sistema.
+ * Gestiona:
+ * - Conexión a base de datos
+ * - Configuración de entorno
+ * - Variables globales
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
 // Configuración de la base de datos
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'gestion_guardias_asistencias');

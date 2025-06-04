@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  horarios.php (Gestión de Horarios)
+ * =========================
+ * 
+ * Endpoint de gestión de horarios.
+ * Gestiona:
+ * - Consulta de horarios
+ * - Registro de horarios
+ * - Actualización de horarios
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

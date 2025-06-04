@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  consulta_asistencia.js (Consulta de Asistencia)
+ * =========================
+ * 
+ * Módulo de consulta de asistencia.
+ * Gestiona la visualización y filtrado de registros:
+ * - Consulta por docente/fecha
+ * - Filtros de búsqueda
+ * - Visualización de resultados
+ * - Exportación de datos
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2024
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 

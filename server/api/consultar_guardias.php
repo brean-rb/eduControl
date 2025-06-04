@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  consultar_guardias.php (Consulta de Guardias)
+ * =========================
+ * 
+ * Endpoint de consulta de guardias.
+ * Gestiona:
+ * - Listado de guardias
+ * - Estado de guardias
+ * - Filtrado de guardias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

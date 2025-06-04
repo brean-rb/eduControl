@@ -1,4 +1,21 @@
 <?php
+/**
+ * =========================
+ *  jornada.php (Control de Jornada)
+ * =========================
+ * 
+ * Endpoint de control de jornada laboral.
+ * Gestiona:
+ * - Inicio de jornada
+ * - Fin de jornada
+ * - Estado de jornada
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Desactivar la salida de errores de PHP
 error_reporting(0);
 ini_set('display_errors', 0);

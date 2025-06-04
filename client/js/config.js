@@ -1,3 +1,22 @@
+/**
+ * =========================
+ *  config.js (Configuración)
+ * =========================
+ * 
+ * Archivo de configuración central del sistema.
+ * Define constantes y configuraciones globales:
+ * - URLs de la API REST
+ * - Rutas de endpoints
+ * - Roles de usuario
+ * - Mensajes del sistema
+ * - Claves de almacenamiento
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Configuración de la API REST
 const API_CONFIG = {
     BASE_URL: 'http://localhost/proyecto_control_asistencia_rest/server/index.php',

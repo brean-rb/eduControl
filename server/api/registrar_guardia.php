@@ -1,4 +1,20 @@
 <?php
+/**
+ * =========================
+ *  registrar_guardia.php (Registro de Guardias)
+ * =========================
+ * 
+ * Endpoint de registro de guardias.
+ * Gestiona:
+ * - Registro de guardias
+ * - Asignación de suplentes
+ * - Validación de horarios
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/Authentication.php';
 
@@ -19,7 +35,7 @@ $decodedToken = $auth->getDecodedToken();
 $response = ['success' => false, 'message' => ''];
 
 try {
-    // Verificar que sea una petición POST
+
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Método no permitido');
     }
@@ -40,10 +56,10 @@ try {
 
     // Verificar si la guardia ya está reservada
     $sql_check = "SELECT id FROM registro_guardias 
-                  WHERE fecha = '$fecha' 
-                  AND hora_inicio = '$hora_inicio' 
-                  AND docente_ausente = '$docente_ausente'
-                  AND grupo = '$grupo'";
+                    WHERE fecha = '$fecha' 
+                    AND hora_inicio = '$hora_inicio' 
+                    AND docente_ausente = '$docente_ausente'
+                    AND grupo = '$grupo'";
 
     $result_check = mysqli_query($conn, $sql_check);
 
@@ -57,24 +73,19 @@ try {
                 horario_grupo, fecha, docente_ausente, docente_guardia, 
                 aula, grupo, contenido, dia_semana, hora_inicio, hora_fin
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                '$horario_grupo', 
+                '$fecha', 
+                '$docente_ausente', 
+                '$docente_guardia', 
+                '$aula', 
+                '$grupo', 
+                '$contenido', 
+                '$dia_semana', 
+                '$hora_inicio', 
+                '$hora_fin'
             )";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'ssssssssss', 
-        $horario_grupo, 
-        $fecha, 
-        $docente_ausente, 
-        $docente_guardia, 
-        $aula, 
-        $grupo, 
-        $contenido, 
-        $dia_semana, 
-        $hora_inicio, 
-        $hora_fin
-    );
-
-    if (mysqli_stmt_execute($stmt)) {
+    if (mysqli_query($conn, $sql)) {
         $response['success'] = true;
         $response['message'] = 'Guardia registrada correctamente';
     } else {

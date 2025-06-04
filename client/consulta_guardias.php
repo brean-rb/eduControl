@@ -1,3 +1,25 @@
+<?php
+/**
+ * =========================
+ *  consulta_guardias.php (Consulta de Guardias)
+ * =========================
+ * 
+ * Vista de consulta y gestión de guardias.
+ * Permite a los usuarios:
+ * - Ver profesores ausentes
+ * - Asignar guardias
+ * - Gestionar suplencias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   consulta_guardias.js    Lógica de consulta
+ * @requires   navbar.js               Componente de navegación
+ * @requires   styles.css              Estilos de la aplicación
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

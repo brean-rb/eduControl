@@ -1,4 +1,25 @@
 <?php
+/**
+ * =========================
+ *  index.php (Panel de Control)
+ * =========================
+ * 
+ * Vista principal del sistema de control de asistencia.
+ * Permite a los usuarios:
+ * - Iniciar/finalizar jornada
+ * - Ver horario del día
+ * - Acceder a funcionalidades según rol
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   navbar.js    Componente de navegación
+ * @requires   app.js       Lógica principal de la aplicación
+ * @requires   styles.css   Estilos de la aplicación
+ */
+
 // Verificar si el usuario está autenticado mediante el token JWT
 $token = isset($_COOKIE['jwtToken']) ? $_COOKIE['jwtToken'] : null;
 if (!$token) {

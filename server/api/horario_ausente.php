@@ -5,6 +5,23 @@ use Config\Authentication;
 
 header('Content-Type: application/json');
 
+/**
+ * =========================
+ *  horario_ausente.php (Horario de Ausente)
+ * =========================
+ * 
+ * Endpoint de gestión de horarios de ausentes.
+ * Gestiona:
+ * - Consulta de horarios
+ * - Registro de ausencias
+ * - Gestión de suplencias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Validar token JWT
 $auth = new Authentication();
 $error = $auth->validaToken();
@@ -37,10 +54,10 @@ try {
 
     // Consulta con JOIN a ausencias y filtrado correcto
     $sql = "SELECT h.hora_desde, h.hora_fins, h.grup, h.aula, COALESCE(c.nom_val, h.contingut) as asignatura,
-                   rg.docente_guardia,
-                   a.jornada_completa,
-                   a.hora_inicio as ausencia_inicio,
-                   a.hora_fin as ausencia_fin
+                    rg.docente_guardia,
+                    a.jornada_completa,
+                    a.hora_inicio as ausencia_inicio,
+                    a.hora_fin as ausencia_fin
             FROM horari_grup h
             LEFT JOIN continguts c ON h.contingut = c.codi AND h.ensenyament = c.ensenyament
             INNER JOIN ausencias a ON a.documento = '$documento'

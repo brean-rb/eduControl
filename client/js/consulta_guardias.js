@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  consulta_guardias.js (Consulta de Guardias)
+ * =========================
+ * 
+ * Módulo de consulta y gestión de guardias.
+ * Gestiona la visualización y asignación de guardias:
+ * - Listado de profesores ausentes
+ * - Asignación de guardias
+ * - Visualización de horarios
+ * - Gestión de suplencias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 

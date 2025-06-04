@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  informe_ausencias.js (Informes de Ausencias)
+ * =========================
+ * 
+ * Módulo de generación de informes de ausencias.
+ * Gestiona la creación y visualización de informes:
+ * - Filtrado por docente/fecha
+ * - Generación de informes
+ * - Visualización de estadísticas
+ * - Exportación de datos
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 

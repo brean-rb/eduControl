@@ -1,3 +1,24 @@
+<?php
+/**
+ * =========================
+ *  login.php (Autenticación)
+ * =========================
+ * 
+ * Vista de inicio de sesión del sistema.
+ * Permite a los usuarios:
+ * - Ingresar credenciales
+ * - Autenticarse en el sistema
+ * - Recuperar acceso
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   login.js     Lógica de autenticación
+ * @requires   styles.css   Estilos de la aplicación
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

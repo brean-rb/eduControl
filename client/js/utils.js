@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  utils.js (Utilidades)
+ * =========================
+ * 
+ * Archivo de utilidades y funciones auxiliares.
+ * Contiene funciones comunes utilizadas en toda la aplicación:
+ * - Manejo de tokens JWT
+ * - Gestión de errores
+ * - Mostrar mensajes modales
+ * - Funciones de autenticación
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { API_CONFIG, ROLES, MENSAJES, STORAGE_KEYS } from './config.js';
 
 // Función para obtener el token JWT desde localStorage

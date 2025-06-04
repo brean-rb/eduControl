@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  navbar.js (Navegación)
+ * =========================
+ * 
+ * Módulo de navegación del sistema.
+ * Gestiona la barra de navegación dinámica:
+ * - Renderizado del menú
+ * - Control de acceso por roles
+ * - Gestión de sesión
+ * - Navegación entre páginas
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { API_CONFIG, STORAGE_KEYS } from './config.js';
 import { mostrarMensajeModal } from './utils.js';
 
@@ -97,20 +115,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (logoutInProgress) return;
                 logoutInProgress = true;
                 logoutBtn.disabled = true;
-                const token = localStorage.getItem('jwtToken');
-                try {
-                    await fetch('http://localhost/proyecto_control_asistencia_rest/server/index.php?ruta=logout', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                } catch (e) {}
-                localStorage.removeItem('jwtToken');
-                localStorage.removeItem('userRole');
-                localStorage.removeItem('userName');
-                window.location.href = 'login.php';
+                await logout();
             });
         }
     }
-}); 
+});
+
+// Función para cerrar sesión
+async function logout() {
+    try {
+        const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+        if (!token) {
+            throw new Error('No hay sesión activa');
+        }
+
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.LOGOUT}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+            // Limpiar el almacenamiento local
+            localStorage.removeItem(STORAGE_KEYS.TOKEN);
+            localStorage.removeItem(STORAGE_KEYS.ROL);
+            localStorage.removeItem(STORAGE_KEYS.NOMBRE);
+            
+            // Redirigir al login
+            window.location.href = 'login.php';
+        } else {
+            throw new Error(data.message || 'Error al cerrar sesión');
+        }
+    } catch (error) {
+        console.error('Error en logout:', error);
+        alert('Error al cerrar sesión: ' + error.message);
+    }
+}
+
+// Exportar la función de logout
+export { logout }; 

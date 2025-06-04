@@ -5,6 +5,23 @@ use Config\Authentication;
 
 header('Content-Type: application/json');
 
+/**
+ * =========================
+ *  horario_profesor.php (Horario de Profesor)
+ * =========================
+ * 
+ * Endpoint de gestión de horarios de profesores.
+ * Gestiona:
+ * - Consulta de horarios
+ * - Actualización de horarios
+ * - Gestión de asignaturas
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 // Validar token JWT
 $auth = new Authentication();
 $error = $auth->validaToken();
@@ -36,15 +53,12 @@ try {
         // Esquema nuevo (MySQLi, tabla horarios)
         $dia_semana = date('w', strtotime($fecha));
         $query = "SELECT h.hora_inicio, h.hora_fin, h.asignatura, h.grupo, h.aula 
-                  FROM horarios h 
-                  WHERE h.documento = ? AND h.dia_semana = ? 
-                  ORDER BY h.hora_inicio";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("si", $documento, $dia_semana);
-        $stmt->execute();
-        $result = $stmt->get_result();
+                    FROM horarios h 
+                    WHERE h.documento = '$documento' AND h.dia_semana = '$dia_semana' 
+                    ORDER BY h.hora_inicio";
+        $result = mysqli_query($conn, $query);
         $horario = [];
-        while ($row = $result->fetch_assoc()) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $horario[] = $row;
         }
     } else if (isset($conexion)) {
@@ -53,7 +67,7 @@ try {
         $dia_numero = date('N', strtotime($fecha));
         $dia_letra = $dia_mapping[$dia_numero];
         $sql = "SELECT h.hora_desde AS hora_inicio, h.hora_fins AS hora_fin, h.grup AS grupo, 
-                       COALESCE(c.nom_val, h.contingut) as asignatura, h.aula
+                        COALESCE(c.nom_val, h.contingut) as asignatura, h.aula
                 FROM horari_grup h
                 LEFT JOIN continguts c ON h.contingut = c.codi AND h.ensenyament = c.ensenyament 
                 WHERE h.docent = '" . mysqli_real_escape_string($conexion, $documento) . "' 

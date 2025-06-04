@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  registro_ausencia.js (Registro de Ausencias)
+ * =========================
+ * 
+ * Módulo de registro de ausencias.
+ * Gestiona el proceso de registro de ausencias:
+ * - Selección de docente
+ * - Registro por día/período
+ * - Selección de horarios
+ * - Justificación de ausencias
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 

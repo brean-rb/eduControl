@@ -1,3 +1,26 @@
+<?php
+/**
+ * =========================
+ *  consulta_asistencia.php (Consulta de Asistencia)
+ * =========================
+ * 
+ * Vista de consulta de asistencia.
+ * Permite a los usuarios:
+ * - Consultar registros por docente/fecha
+ * - Filtrar resultados
+ * - Exportar datos
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ * 
+ * @requires   consulta_asistencia.js  Lógica de consulta
+ * @requires   navbar.js               Componente de navegación
+ * @requires   styles.css              Estilos de la aplicación
+ */
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

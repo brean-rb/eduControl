@@ -1,3 +1,21 @@
+/**
+ * =========================
+ *  guardias_realizadas.js (Historial de Guardias)
+ * =========================
+ * 
+ * Módulo de historial de guardias realizadas.
+ * Gestiona la visualización del historial:
+ * - Filtrado por fecha/hora
+ * - Visualización de detalles
+ * - Estadísticas de guardias
+ * - Exportación de informes
+ * 
+ * @package    ControlAsistencia
+ * @author     Ruben Ferrer
+ * @version    1.0
+ * @since      2025
+ */
+
 import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
