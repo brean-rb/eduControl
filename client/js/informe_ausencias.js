@@ -1,4 +1,4 @@
-import { obtenerToken, manejarErrorAutenticacion } from './utils.js';
+import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,13 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
             fecha.required = false;
             // Cargar docentes solo si el select está vacío (evita recarga innecesaria)
             if (documento.options.length <= 1) {
+                const token = obtenerToken();
+                if (!token) {
+                    mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+                    return;
+                }
+
                 fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.DOCENTES}`, {
                     headers: {
-                        'Authorization': `Bearer ${obtenerToken()}`
+                        'Authorization': `Bearer ${token}`
                     },
                     credentials: 'same-origin'
                 })
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
                 .then(data => {
                     if (data.success) {
                         // Limpiar opciones previas excepto la primera
@@ -35,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             documento.appendChild(option);
                         });
                     } else {
-                        alert('Error al cargar docentes: ' + data.message);
+                        mostrarMensajeModal('Error al cargar docentes: ' + data.message, 'danger');
                     }
                 })
                 .catch(error => manejarErrorAutenticacion(error));
@@ -57,13 +68,26 @@ document.addEventListener('DOMContentLoaded', () => {
     formInforme.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+        
         const formData = new FormData(formInforme);
         try {
             const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.INFORME_AUSENCIAS}`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 body: formData,
                 credentials: 'same-origin'
             });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             
             const data = await response.json();
             
@@ -73,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mostrarMensajeModal('Error al generar el informe: ' + data.message, 'danger');
             }
         } catch (error) {
-            mostrarMensajeModal('Error al generar el informe', 'danger');
+            manejarErrorAutenticacion(error);
         }
     });
 

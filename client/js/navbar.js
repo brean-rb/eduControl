@@ -74,7 +74,43 @@ function renderBienvenida() {
     }
 }
 
+let logoutInProgress = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     renderNavbar();
     renderBienvenida();
+
+    // Eliminar eventos anteriores y evitar duplicidad del botón
+    const oldLogoutBtn = document.getElementById('logout-btn');
+    if (oldLogoutBtn) {
+        const newLogoutBtn = oldLogoutBtn.cloneNode(true);
+        oldLogoutBtn.parentNode.replaceChild(newLogoutBtn, oldLogoutBtn);
+    }
+
+    // Solución definitiva: solo asignar el evento una vez por sesión de navegador
+    if (!window.__navbarLogoutAssigned) {
+        window.__navbarLogoutAssigned = true;
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (event) => {
+                event.preventDefault();
+                if (logoutInProgress) return;
+                logoutInProgress = true;
+                logoutBtn.disabled = true;
+                const token = localStorage.getItem('jwtToken');
+                try {
+                    await fetch('http://localhost/proyecto_control_asistencia_rest/server/index.php?ruta=logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                } catch (e) {}
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.php';
+            });
+        }
+    }
 }); 

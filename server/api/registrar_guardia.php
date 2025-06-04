@@ -31,7 +31,7 @@ try {
     $grupo = mysqli_real_escape_string($conn, $_POST['grupo']);
     $aula = mysqli_real_escape_string($conn, $_POST['aula']);
     $docente_ausente = mysqli_real_escape_string($conn, $_POST['docente_ausente']);
-    $docente_guardia = mysqli_real_escape_string($conn, $_POST['docente_guardia']);
+    $docente_guardia = mysqli_real_escape_string($conn, $decodedToken->id);
     $contenido = mysqli_real_escape_string($conn, $_POST['contenido']);
     $dia_semana = ['', 'L', 'M', 'X', 'J', 'V'][date('N', strtotime($fecha))];
     

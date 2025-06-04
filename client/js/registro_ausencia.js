@@ -1,4 +1,4 @@
-import { obtenerToken, manejarErrorAutenticacion } from './utils.js';
+import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const fecha = this.value;
 
         if (documento && fecha) {
+            const token = obtenerToken();
+            if (!token) {
+                mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+                return;
+            }
+
             const formData = new FormData();
             formData.append('documento', documento);
             formData.append('fecha', fecha);
@@ -78,9 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.HORARIOS}`, {
                     method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: formData,
                     credentials: 'same-origin'
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const data = await response.json();
 
@@ -90,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     mostrarMensajeModal('Error al cargar el horario: ' + data.message, 'danger');
                 }
             } catch (error) {
-                mostrarMensajeModal('Error al cargar el horario', 'danger');
+                manejarErrorAutenticacion(error);
             }
         }
     });
@@ -178,10 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar docentes en el select
     if (selectDocente) {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.DOCENTES}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             credentials: 'same-origin'
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then(data => {
             if (data.success) {
                 selectDocente.innerHTML = '<option value="">Selecciona un docente...</option>';
@@ -192,8 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDocente.appendChild(option);
                 });
             } else {
-                console.error('Error al cargar docentes:', data.message);
-                alert('Error al cargar la lista de docentes: ' + data.message);
+                mostrarMensajeModal('Error al cargar docentes: ' + data.message, 'danger');
             }
         })
         .catch(error => manejarErrorAutenticacion(error));

@@ -1,18 +1,29 @@
-import { obtenerToken, manejarErrorAutenticacion } from './utils.js';
+import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarProfesoresAusentes();
 
     function cargarProfesoresAusentes() {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.CONSULTAR_GUARDIAS}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${obtenerToken()}`
+                'Authorization': `Bearer ${token}`
             },
             credentials: 'same-origin'
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then(data => {
             if (data.success) {
                 mostrarProfesoresAusentes(data.profesores_ausentes);
@@ -24,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mostrarHorarioProfesor(e) {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         const documento = e.target.dataset.documento;
         const fecha = new Date().toISOString().split('T')[0];
         const formData = new FormData();
@@ -35,10 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.HORARIO_AUSENTE}`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: formData,
             credentials: 'same-origin'
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then(data => {
             if (data.success) {
                 mostrarHorario(data.horario, documento);
@@ -48,10 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             document.getElementById('horario-container').style.display = 'none';
+            manejarErrorAutenticacion(error);
         });
     }
 
     function reservarGuardia(e) {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         const btn = e.target;
         const formData = new FormData();
         formData.append('fecha', new Date().toISOString().split('T')[0]);
@@ -65,10 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.REGISTRAR_GUARDIA}`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: formData,
             credentials: 'same-origin'
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then(data => {
             if (data.success) {
                 mostrarMensajeModal('Guardia registrada correctamente', 'success');
@@ -81,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(error => {
+            manejarErrorAutenticacion(error);
         });
     }
 

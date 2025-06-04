@@ -61,23 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Manejo global de logout
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', async function() {
-            try {
-                await fetchAutenticado(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.LOGOUT}`, {
-                    method: 'POST'
-                });
-            } finally {
-                localStorage.removeItem('jwtToken');
-                localStorage.removeItem('userRole');
-                localStorage.removeItem('userName');
-                window.location.href = 'login.php';
-            }
-        });
-    }
-
     // Verificar si estamos en la página de login
     const loginForm = document.getElementById('login-form');
     if (loginForm) {

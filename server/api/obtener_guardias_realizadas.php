@@ -17,11 +17,24 @@ if ($error) {
 $decodedToken = $auth->getDecodedToken();
 $dni_profesor = $decodedToken->id;
 
+// Log para depuración
+error_log("DNI del profesor: " . $dni_profesor);
+
 $response = ['success' => false, 'message' => '', 'guardias' => []];
 
 try {
     $fecha = $_GET['fecha'] ?? date('Y-m-d');
     $hora = $_GET['hora'] ?? null;
+
+    // Log para depuración
+    error_log("Fecha de búsqueda: " . $fecha);
+    error_log("Hora de búsqueda: " . $hora);
+
+    // Primero verificar si el profesor existe
+    $check_profesor = mysqli_query($conn, "SELECT document FROM docent WHERE document = '$dni_profesor'");
+    if (mysqli_num_rows($check_profesor) === 0) {
+        throw new Exception("El profesor con DNI $dni_profesor no existe en la base de datos");
+    }
 
     $sql = "SELECT 
                 g.id,
@@ -52,7 +65,13 @@ try {
 
     $sql .= " ORDER BY g.fecha DESC, g.hora_inicio ASC";
 
+    // Log para depuración
+    error_log("SQL Query: " . $sql);
+
     $resultado = mysqli_query($conn, $sql);
+    if (!$resultado) {
+        throw new Exception("Error en la consulta: " . mysqli_error($conn));
+    }
 
     if ($resultado) {
         while ($row = mysqli_fetch_assoc($resultado)) {
@@ -72,7 +91,12 @@ try {
         }
         $response['success'] = true;
     }
+
+    // Log para depuración
+    error_log("Número de guardias encontradas: " . count($response['guardias']));
+
 } catch (Exception $e) {
+    error_log("Error en obtener_guardias_realizadas.php: " . $e->getMessage());
     $response['message'] = 'Error: ' . $e->getMessage();
 }
 

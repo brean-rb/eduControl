@@ -1,9 +1,15 @@
-import { obtenerToken, manejarErrorAutenticacion } from './utils.js';
+import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const formFiltro = document.getElementById('filtroGuardias');
     const tablaGuardias = document.getElementById('tablaGuardias').getElementsByTagName('tbody')[0];
+    const inputFecha = document.getElementById('fecha');
+
+    // Establecer la fecha actual por defecto
+    const hoy = new Date();
+    const fechaFormateada = hoy.toISOString().split('T')[0];
+    inputFecha.value = fechaFormateada;
 
     // Cargar guardias al cargar la página
     cargarGuardias();
@@ -15,6 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function cargarGuardias() {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         const fecha = document.getElementById('fecha').value;
         const hora = document.getElementById('hora').value;
 
@@ -23,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hora) {
             url += `&hora=${hora}`;
         }
+
+        console.log('URL de búsqueda:', url); // Log para depuración
 
         // Limpiar la tabla
         tablaGuardias.innerHTML = '';
@@ -42,48 +56,65 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url, {
             credentials: 'same-origin',
             headers: {
-                'Authorization': `Bearer ${obtenerToken()}`
+                'Authorization': `Bearer ${token}`
             }
         })
-            .then(response => response.json())
-            .then(data => {
-                tablaGuardias.innerHTML = '';
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta del servidor:', data); // Log para depuración
+            tablaGuardias.innerHTML = '';
 
-                if (data.success) {
-                    if (data.guardias.length === 0) {
-                        const noDataRow = document.createElement('tr');
-                        noDataRow.innerHTML = `
-                            <td colspan="8" class="text-center">
-                                No se encontraron guardias para los criterios seleccionados
-                            </td>
-                        `;
-                        tablaGuardias.appendChild(noDataRow);
-                    } else {
-                        data.guardias.forEach(guardia => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${guardia.fecha}</td>
-                                <td>${guardia.hora}</td>
-                                <td>${guardia.hora_fin}</td>
-                                <td>${guardia.profesor_ausente}</td>
-                                <td>${guardia.profesor_guardia}</td>
-                                <td>${guardia.asignatura}</td>
-                                <td>${guardia.grupo}</td>
-                                <td>${guardia.aula}</td>
-                            `;
-                            tablaGuardias.appendChild(row);
-                        });
-                    }
-                } else {
-                    const errorRow = document.createElement('tr');
-                    errorRow.innerHTML = `
-                        <td colspan="8" class="text-center text-danger">
-                            Error: ${data.message}
+            if (data.success) {
+                if (data.guardias.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.innerHTML = `
+                        <td colspan="8" class="text-center">
+                            No se encontraron guardias para la fecha ${fecha}${hora ? ' y hora ' + hora : ''}
                         </td>
                     `;
-                    tablaGuardias.appendChild(errorRow);
+                    tablaGuardias.appendChild(noDataRow);
+                } else {
+                    data.guardias.forEach(guardia => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${guardia.fecha}</td>
+                            <td>${guardia.hora}</td>
+                            <td>${guardia.hora_fin}</td>
+                            <td>${guardia.profesor_ausente}</td>
+                            <td>${guardia.profesor_guardia}</td>
+                            <td>${guardia.asignatura}</td>
+                            <td>${guardia.grupo}</td>
+                            <td>${guardia.aula}</td>
+                        `;
+                        tablaGuardias.appendChild(row);
+                    });
                 }
-            })
-            .catch(error => manejarErrorAutenticacion(error));
+            } else {
+                mostrarMensajeModal('Error al cargar las guardias: ' + data.message, 'danger');
+                const errorRow = document.createElement('tr');
+                errorRow.innerHTML = `
+                    <td colspan="8" class="text-center text-danger">
+                        Error: ${data.message}
+                    </td>
+                `;
+                tablaGuardias.appendChild(errorRow);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error); // Log para depuración
+            manejarErrorAutenticacion(error);
+            tablaGuardias.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center text-danger">
+                        Error al cargar las guardias. Por favor, intente nuevamente.
+                    </td>
+                </tr>
+            `;
+        });
     }
 });
