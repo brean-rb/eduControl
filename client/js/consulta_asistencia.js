@@ -1,4 +1,4 @@
-import { obtenerToken, manejarErrorAutenticacion } from './utils.js';
+import { obtenerToken, manejarErrorAutenticacion, mostrarMensajeModal } from './utils.js';
 import { API_CONFIG } from './config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,9 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modificar fetch para incluir el token JWT
     function cargarDocentes() {
+        const token = obtenerToken();
+        if (!token) {
+            mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+            return;
+        }
+
         fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.DOCENTES}`, {
             headers: {
-                'Authorization': `Bearer ${obtenerToken()}`
+                'Authorization': `Bearer ${token}`
             },
             credentials: 'same-origin'
         })
@@ -70,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDocente.appendChild(option);
                 });
             } else {
-                // Error al cargar docentes, solo alertar si es necesario
+                mostrarMensajeModal('Error al cargar docentes', 'danger');
             }
         })
         .catch(error => manejarErrorAutenticacion(error));
@@ -81,10 +87,19 @@ document.addEventListener('DOMContentLoaded', () => {
         formConsulta.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const token = obtenerToken();
+            if (!token) {
+                mostrarMensajeModal('No se ha iniciado sesión en la aplicación', 'danger');
+                return;
+            }
+            
             const formData = new FormData(formConsulta);
             
             fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.RUTAS.ASISTENCIA}`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 body: formData,
                 credentials: 'same-origin'
             })
@@ -102,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => {
-                mostrarMensajeModal('Error al consultar asistencia', 'danger');
+                manejarErrorAutenticacion(error);
             });
         });
     }
